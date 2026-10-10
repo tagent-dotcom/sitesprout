@@ -12,7 +12,7 @@ IndexNow on every deploy · Whop checkout · an SEO check script.
 ## Start a new site
 
 ```bash
-gh repo create my-site --template tagent-dotcom/sitesprout --private --clone
+gh repo create my-site --template tagent-dotcom/sitesprout --public --clone
 cd my-site
 npm install
 cp .env.example .env
@@ -72,3 +72,7 @@ docs/                      guides
 - [Analytics, Search Console, Bing, IndexNow, Clarity](docs/ANALYTICS-AND-INDEXING.md)
 - [Selling with Whop](docs/WHOP.md)
 - [Git and deploy](docs/DEPLOY.md)
+
+## Licence
+
+MIT. Use it for anything; keep the licence file.
