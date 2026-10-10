@@ -1,0 +1,9 @@
+---
+import Simple from '../views/Simple.astro';
+import { SITE } from '../config/site';
+import { useTranslations } from '../i18n/ui';
+const t = useTranslations('en');
+---
+<Simple lang="en" page="contact" title={t('contact.title')} description={t('contact.description')}>
+  <p>Email <a href={`mailto:${SITE.owner.email}`}>{SITE.owner.email}</a>. We answer within two working days.</p>
+</Simple>

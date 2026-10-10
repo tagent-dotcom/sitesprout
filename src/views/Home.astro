@@ -1,0 +1,47 @@
+---
+/**
+ * The home page body, shared by every language (src/pages/index.astro,
+ * src/pages/de/index.astro). Long copy lives here per language; short
+ * repeated words come from src/i18n/ui.ts.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SITE_URL } from '../config/site';
+import { LOCALES, type Locale } from '../i18n/config';
+import { pathFor } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Organization + WebSite once, on the home page; other pages point to them by @id.
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    name: SITE.name,
+    url: `${SITE_URL}/`,
+    logo: `${SITE_URL}/favicon.svg`,
+    founder: { '@type': 'Person', name: SITE.owner.name, url: SITE.owner.url },
+    sameAs: SITE.sameAs,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    name: SITE.name,
+    url: `${SITE_URL}/`,
+    inLanguage: LOCALES[lang].htmlLang,
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  },
+];
+---
+
+<BaseLayout lang={lang} page="home" title={t('home.title')} description={t('home.description')} schema={schema}>
+  <section class="hero">
+    <h1>{t('home.title')}</h1>
+    <p class="lead">{t('home.lead')}</p>
+    <a class="btn" href={pathFor('pricing', lang)}>{t('home.cta')}</a>
+  </section>
+</BaseLayout>

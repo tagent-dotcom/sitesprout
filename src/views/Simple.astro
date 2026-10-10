@@ -1,0 +1,19 @@
+---
+/**
+ * A plain content page (About, Contact, Privacy) in any language: one H1,
+ * then the page's own copy passed as the slot.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { Locale } from '../i18n/config';
+import type { PageKey } from '../i18n/routes';
+
+interface Props { lang: Locale; page: PageKey; title: string; description: string; noindex?: boolean }
+const { lang, page, title, description, noindex } = Astro.props;
+---
+
+<BaseLayout lang={lang} page={page} title={title} description={description} noindex={noindex}>
+  <article class="prose">
+    <h1>{title}</h1>
+    <slot />
+  </article>
+</BaseLayout>

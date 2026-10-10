@@ -1,0 +1,9 @@
+{
+  "name": "SiteSprout",
+  "short_name": "SiteSprout",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f7a4d",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

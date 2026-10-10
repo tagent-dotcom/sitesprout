@@ -1,0 +1,10 @@
+---
+import Simple from '../../views/Simple.astro';
+import { SITE } from '../../config/site';
+import { useTranslations } from '../../i18n/ui';
+const t = useTranslations('de');
+---
+<Simple lang="de" page="contact" title={t('contact.title')} description={t('contact.description')}>
+  <p>E-Mail: <a href={`mailto:${SITE.owner.email}`}>{SITE.owner.email}</a>. Wir antworten innerhalb von zwei Werktagen.</p>
+  <p>Für Deutschland brauchst du ein Impressum mit Name und Postanschrift (§ 5 DDG).</p>
+</Simple>

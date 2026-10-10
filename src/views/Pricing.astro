@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhopCheckout from '../components/WhopCheckout.astro';
+import type { Locale } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} page="pricing" title={t('pricing.title')} description={t('pricing.description')}>
+  <article class="prose">
+    <h1>{t('pricing.title')}</h1>
+    <p>{t('pricing.description')}</p>
+    <WhopCheckout lang={lang} />
+  </article>
+</BaseLayout>

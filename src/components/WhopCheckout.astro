@@ -1,0 +1,25 @@
+---
+/**
+ * Whop checkout for the paid plan, embedded on the page. Shows nothing until
+ * PUBLIC_WHOP_PLAN_ID is set, so the site never points at a checkout that
+ * cannot open. Without JavaScript the link opens Whop's hosted checkout.
+ * Setup, webhooks and testing: docs/WHOP.md.
+ */
+import { IDS } from '../config/site';
+import type { Locale } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const plan = IDS.whopPlan;
+---
+
+{plan && (
+  <div class="whop">
+    <div data-whop-checkout-plan-id={plan} data-whop-checkout-theme="light"></div>
+    <noscript><a class="btn" href={`https://whop.com/checkout/${plan}/`}>{t('pricing.cta')}</a></noscript>
+    <p class="muted small">{t('pricing.secure')}</p>
+  </div>
+)}
+{plan && <script is:inline async defer src="https://js.whop.com/static/checkout/loader.js"></script>}

@@ -1,0 +1,40 @@
+---
+/**
+ * Google Analytics 4 and Microsoft Clarity, each only when its id is set
+ * (.env.example). Consent Mode v2 runs first: analytics storage is granted,
+ * ad storage denied, until you add a consent banner (needed for visitors in
+ * the EU and UK once you show ads). See docs/ANALYTICS-AND-INDEXING.md.
+ */
+import { IDS } from '../config/site';
+---
+
+{IDS.ga && (
+  <>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
+    </script>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${IDS.ga}`}></script>
+    <script is:inline define:vars={{ id: IDS.ga }}>
+      gtag('js', new Date());
+      gtag('config', id);
+    </script>
+  </>
+)}
+
+{IDS.clarity && (
+  <script is:inline define:vars={{ id: IDS.clarity }}>
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+      t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', id);
+  </script>
+)}

@@ -1,0 +1,8 @@
+---
+import Simple from '../views/Simple.astro';
+import { useTranslations } from '../i18n/ui';
+const t = useTranslations('en');
+---
+<Simple lang="en" page="home" title={t('notFound.title')} description={t('notFound.text')} noindex>
+  <p>{t('notFound.text')} <a href="/">→</a></p>
+</Simple>

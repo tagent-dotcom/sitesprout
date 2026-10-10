@@ -1,0 +1,12 @@
+---
+import Simple from '../views/Simple.astro';
+import { SITE } from '../config/site';
+import { useTranslations } from '../i18n/ui';
+const t = useTranslations('en');
+---
+<Simple lang="en" page="about" title={t('about.title')} description={t('about.description')}>
+  <p>{SITE.name} is made by {SITE.owner.name} in {SITE.owner.city}, {SITE.owner.country}, since {SITE.since}.</p>
+  <p>Say who you are, why you built the site, and where your facts come from. Google's quality raters and ad reviewers look for a real person behind a site.</p>
+  <h2>Sources</h2>
+  <p>List the sources you use and how you check them.</p>
+</Simple>

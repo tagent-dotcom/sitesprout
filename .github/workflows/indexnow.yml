@@ -1,0 +1,41 @@
+# After every successful production deploy (Vercel posts a deployment status
+# to GitHub), tell IndexNow about URLs that are new in the sitemap. Also runs
+# daily and by hand, so a failed submission is retried.
+# Needs the repository secret INDEXNOW_KEY (Settings > Secrets > Actions).
+name: IndexNow
+
+on:
+  deployment_status:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    if: github.event_name != 'deployment_status' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    env:
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+      INDEXNOW_STATE: .indexnow/sent.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore the list of URLs already sent
+        uses: actions/cache/restore@v4
+        with:
+          path: .indexnow
+          key: indexnow-${{ github.run_id }}
+          restore-keys: indexnow-
+      - name: Submit new URLs
+        run: node scripts/indexnow.mjs
+      - name: Save the list
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .indexnow
+          key: indexnow-${{ github.run_id }}

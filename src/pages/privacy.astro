@@ -1,0 +1,17 @@
+---
+import Simple from '../views/Simple.astro';
+import { SITE } from '../config/site';
+import { useTranslations } from '../i18n/ui';
+const t = useTranslations('en');
+---
+<Simple lang="en" page="privacy" title={t('privacy.title')} description={t('privacy.description')}>
+  <p>Template. Review it before launch and keep it true to what the site really does.</p>
+  <h2>What we collect</h2>
+  <p>Anonymous usage statistics through Google Analytics and Microsoft Clarity (pages viewed, device type, approximate country). No account is needed to use the site.</p>
+  <h2>Payments</h2>
+  <p>Paid plans are sold and processed by Whop. We never see your card details.</p>
+  <h2>Advertising</h2>
+  <p>If the site shows ads, the ad network may use cookies to show and measure them. Visitors in the EU and UK are asked for consent first.</p>
+  <h2>Contact</h2>
+  <p>Questions about your data: <a href={`mailto:${SITE.owner.email}`}>{SITE.owner.email}</a>.</p>
+</Simple>

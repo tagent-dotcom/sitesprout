@@ -1,0 +1,22 @@
+---
+import { SITE } from '../config/site';
+import type { Locale } from '../i18n/config';
+import { pathFor } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <p>© {SITE.since === year ? year : `${SITE.since} to ${year}`} {SITE.name}. {t('footer.madeBy')} <a href={pathFor('about', lang)}>{SITE.owner.name}</a>.</p>
+    <nav aria-label="Footer">
+      <a href={pathFor('about', lang)}>{t('nav.about')}</a>
+      <a href={pathFor('contact', lang)}>{t('nav.contact')}</a>
+      <a href={pathFor('privacy', lang)}>{t('footer.privacy')}</a>
+    </nav>
+  </div>
+</footer>

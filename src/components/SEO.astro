@@ -1,0 +1,79 @@
+---
+/**
+ * Everything search engines and share previews read, in one place:
+ * title, description, canonical, robots, hreflang, Open Graph, Twitter and
+ * JSON-LD. Every page passes its own title and description; the rest is
+ * worked out from the page's URL and src/config/site.ts.
+ * Rules behind it: docs/SEO-GUIDELINES.md.
+ */
+import { SITE, SITE_URL, IDS } from '../config/site';
+import { DEFAULT_LOCALE, LOCALES, type Locale } from '../i18n/config';
+import { alternatesFor, type PageKey } from '../i18n/routes';
+
+interface Props {
+  /** 50 to 60 characters, main keyword first. The site name is added after it. */
+  title: string;
+  /** 140 to 160 characters: what the page gives the searcher, with the keyword. */
+  description: string;
+  lang: Locale;
+  /** The page's row in src/i18n/routes.ts, so its translations get hreflang links. */
+  page?: PageKey;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  /** Extra JSON-LD objects for this page (FAQPage, WebApplication, Article...). */
+  schema?: Record<string, unknown>[];
+}
+
+const { title, description, lang, page, image = SITE.ogImage, type = 'website', noindex = false, schema = [] } = Astro.props;
+
+const fullTitle = title.includes(SITE.titleSuffix) ? title : `${title} | ${SITE.titleSuffix}`;
+// The canonical is always the clean URL of this page: no query string, with the slash.
+const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+const ogImage = new URL(image, SITE_URL).href;
+const alternates = page ? alternatesFor(page) : [];
+const xDefault = alternates.find((a) => a.lang === DEFAULT_LOCALE);
+
+const baseSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: LOCALES[lang].htmlLang,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+  },
+];
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+
+{!noindex && alternates.map((a) => (
+  <link rel="alternate" hreflang={LOCALES[a.lang].htmlLang} href={new URL(a.path, SITE_URL).href} />
+))}
+{!noindex && xDefault && <link rel="alternate" hreflang="x-default" href={new URL(xDefault.path, SITE_URL).href} />}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={LOCALES[lang].ogLocale} />
+{alternates.filter((a) => a.lang !== lang).map((a) => <meta property="og:locale:alternate" content={LOCALES[a.lang].ogLocale} />)}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{IDS.gscVerification && <meta name="google-site-verification" content={IDS.gscVerification} />}
+{IDS.bingVerification && <meta name="msvalidate.01" content={IDS.bingVerification} />}
+
+{[...baseSchema, ...schema].map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}

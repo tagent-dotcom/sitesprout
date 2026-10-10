@@ -1,0 +1,10 @@
+---
+import Simple from '../../views/Simple.astro';
+import { SITE } from '../../config/site';
+import { useTranslations } from '../../i18n/ui';
+const t = useTranslations('de');
+---
+<Simple lang="de" page="about" title={t('about.title')} description={t('about.description')}>
+  <p>{SITE.name} wird von {SITE.owner.name} in {SITE.owner.city}, {SITE.owner.country} gemacht, seit {SITE.since}.</p>
+  <p>Schreibe, wer du bist, warum es die Website gibt und woher deine Fakten stammen.</p>
+</Simple>

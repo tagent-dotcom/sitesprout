@@ -1,0 +1,15 @@
+---
+import Simple from '../../views/Simple.astro';
+import { SITE } from '../../config/site';
+import { useTranslations } from '../../i18n/ui';
+const t = useTranslations('de');
+---
+<Simple lang="de" page="privacy" title={t('privacy.title')} description={t('privacy.description')}>
+  <p>Vorlage. Vor dem Start prüfen und an die tatsächliche Nutzung anpassen.</p>
+  <h2>Welche Daten wir erheben</h2>
+  <p>Anonyme Nutzungsstatistiken über Google Analytics und Microsoft Clarity. Für die Nutzung ist kein Konto nötig.</p>
+  <h2>Zahlungen</h2>
+  <p>Bezahlpläne werden über Whop verkauft und abgewickelt. Wir sehen deine Kartendaten nie.</p>
+  <h2>Kontakt</h2>
+  <p><a href={`mailto:${SITE.owner.email}`}>{SITE.owner.email}</a></p>
+</Simple>

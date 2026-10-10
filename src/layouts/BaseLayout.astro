@@ -1,0 +1,51 @@
+---
+/**
+ * The page shell every page uses. A page passes its language, its row in
+ * src/i18n/routes.ts, a title and a description; the layout adds the SEO
+ * tags, analytics, header and footer.
+ */
+import SEO from '../components/SEO.astro';
+import Analytics from '../components/Analytics.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+import { LOCALES, type Locale } from '../i18n/config';
+import type { PageKey } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  lang: Locale;
+  page?: PageKey;
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown>[];
+}
+const { lang, page, title, description, image, noindex, schema } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={LOCALES[lang].htmlLang} dir={LOCALES[lang].dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={SITE.themeColor} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO title={title} description={description} lang={lang} page={page} image={image} noindex={noindex} schema={schema} />
+    <Analytics />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t('skip')}</a>
+    <Header lang={lang} page={page} />
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>
