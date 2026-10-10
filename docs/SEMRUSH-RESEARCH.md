@@ -2,7 +2,8 @@
 
 How to find site and page ideas that get traffic a new site can actually win.
 This is the process used to pick the Turkish tools site and the tier 1 quiz
-ideas. Write what you find into [../IDEA.md](../IDEA.md).
+ideas. Write what you find into [../IDEA.md](../IDEA.md) and keep the raw
+keyword lists in [../research/](../research/README.md).
 
 ## What makes a good idea
 
@@ -75,7 +76,14 @@ For the 10 to 20 domains that keep appearing:
 4. **Keyword Gap**: enter 3 to 5 competitors to find keywords they rank for
    that the others miss.
 
-## Step 6: Decide and plan
+## Step 6: Save the raw data
+
+Save everything as CSV in [research/](../research/README.md): the first-pass
+bulk check, the seed totals, every Keyword Magic keyword (with its group and
+an "old year" flag), the SERP top 10 and the competitor overviews. The
+column layout is in research/README.md.
+
+## Step 7: Decide and plan
 
 Write in IDEA.md:
 

@@ -2,6 +2,9 @@
 
 > Fill this in before building. Research steps: [docs/SEMRUSH-RESEARCH.md](docs/SEMRUSH-RESEARCH.md).
 > Keep numbers with their date and source (Semrush database, month).
+> Save the full keyword lists as CSV in [research/](research/README.md)
+> (keywords, seeds, SERP top 10, competitors, first-pass bulk check), using
+> the columns there. This file holds the summary; research/ holds every keyword.
 
 ## One-line pitch
 

@@ -47,7 +47,8 @@ Then:
 ## Where things live
 
 ```
-IDEA.md                    the idea, research and decision (fill in first)
+IDEA.md                    the idea, research summary and decision (fill in first)
+research/                  raw keyword research as CSV (keywords, SERPs, competitors)
 src/config/site.ts         site address, name, owner, ids from env
 src/i18n/config.ts         languages
 src/i18n/routes.ts         every page and its URL per language
